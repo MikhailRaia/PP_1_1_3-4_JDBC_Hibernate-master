@@ -12,11 +12,15 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
 
     public static final String USER_TABLE =
-            " CREATE TABLE  Users ( id INT(5) NOT NULL AUTO_INCREMENT , name  VARCHAR(255) , lastname VARCHAR(255) , age tinyint (5) NOT NULL ,  PRIMARY KEY( id )) ";
+            " CREATE TABLE  Users ( " +
+                    "id BIGINT(5) NOT NULL AUTO_INCREMENT , " +
+                    "name  VARCHAR(255) , " +
+                    "lastname VARCHAR(255) , " +
+                    "age tinyint (5) NOT NULL ,  " +
+                    "PRIMARY KEY( id )) ";
 
-    static PreparedStatement prSt;
     public UserDaoJDBCImpl() {
-
+        Util.setConnection();
     }
 
     public void createUsersTable() {
@@ -30,7 +34,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try {
-            Util.statement.executeUpdate("DROP TABLE Users");
+            Util.statement.executeUpdate("DROP TABLE User");
             Util.statement.close();
             System.out.println("Таблица Users удалена");
         } catch (SQLException ignore) {
@@ -39,13 +43,15 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
+        PreparedStatement prSt;
+        String insert = "INSERT INTO Users ( name , lastname , age ) Values(?,?,?)";
         try {
-            String insert = "INSERT INTO Users ( name , lastname , age ) Values(?,?,?)";
             prSt = Util.connection.prepareStatement(insert);
             prSt.setString(1, name);
             prSt.setString(2, lastName);
             prSt.setByte(3, age);
             prSt.executeUpdate();//мб execute
+            System.out.println("User с именем " + name + " добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -14,37 +14,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUsersTable() throws SQLException {
-        Util.setConnection();
         userDaoJDBC.createUsersTable();
     }
 
     @Override
     public void dropUsersTable() throws SQLException {
-        Util.setConnection();
         userDaoJDBC.dropUsersTable();
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        Util.setConnection();
         userDaoJDBC.saveUser( name, lastName,age);
     }
 
     @Override
     public void removeUserById(long id) {
-        Util.setConnection();
-
     }
 
     @Override
     public List<User> getAllUsers() throws SQLException {
-        Util.setConnection();
         return userDaoJDBC.getAllUsers();
     }
 
     @Override
     public void cleanUsersTable() {
-        Util.setConnection();
         userDaoJDBC.cleanUsersTable();
     }
 }
