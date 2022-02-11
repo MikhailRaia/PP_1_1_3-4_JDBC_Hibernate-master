@@ -17,7 +17,7 @@ public class Main  {
 
         //JDBC
 //        UserDao user = new UserDaoJDBCImpl();
-//        UserService userService = new UserServiceImpl();
+        UserService userService = new UserServiceImpl();
 //        user.createUsersTable();
 //        user.saveUser("andrei", "petrov",(byte)22);
 //        user.saveUser("vasya", "smirnov",(byte)25);
@@ -30,12 +30,12 @@ public class Main  {
 //        userService.saveUser("andrei", "petrov",(byte)22);
 //        userService.saveUser("vasya", "smirnov",(byte)25);
 //        userService.saveUser("leha", "bobrov",(byte)27);
-//        userService.dropUsersTable();
+        userService.dropUsersTable();
 
-        UserDao userHib = new UserDaoHibernateImpl();
+//        UserDao userHib = new UserDaoHibernateImpl();
 //        userHib.createUsersTable();
 
-        userHib.saveUser("andrey", "petrov", (byte)20);
+//        userHib.saveUser("andrey", "petrov", (byte)20);
 //        userHib.dropUsersTable();
     }
 

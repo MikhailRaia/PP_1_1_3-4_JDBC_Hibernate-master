@@ -34,11 +34,11 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try {
-            Util.statement.executeUpdate("DROP TABLE User");
+            Util.statement.executeUpdate("DROP TABLE IF EXISTS Users");
             Util.statement.close();
-            System.out.println("Таблица Users удалена");
-        } catch (SQLException ignore) {
-
+            System.out.println("Таблица Users удалена или ее не существует");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
