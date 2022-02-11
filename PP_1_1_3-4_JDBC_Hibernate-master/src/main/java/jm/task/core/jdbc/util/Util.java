@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import java.sql.*;
 import java.util.Properties;
@@ -45,12 +46,15 @@ public class Util {
                 properties.setProperty("hibernate.connection.password", "Pupsiksu6ami!");
                 properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
                 properties.setProperty("hibernate.show_sql", "true");
+                properties.setProperty("hibernate.current_session_context_class", "thread");
                 properties.setProperty("hibernate.hbm2ddl.auto", "update");
+
+
 
                 configuration.setProperties(properties);
                 configuration.addAnnotatedClass(User.class);
 
-                StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
 
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
