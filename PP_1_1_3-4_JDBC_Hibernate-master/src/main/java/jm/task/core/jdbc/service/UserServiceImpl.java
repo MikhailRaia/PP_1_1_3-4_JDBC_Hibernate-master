@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() throws SQLException {
-        return userDaoJDBC.getAllUsers();
-//        return userDaoHibernate.getAllUsers();
+//        return userDaoJDBC.getAllUsers();
+        return userDaoHibernate.getAllUsers();
     }
 
     @Override
