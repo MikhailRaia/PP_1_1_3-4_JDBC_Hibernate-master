@@ -3,21 +3,21 @@ package jm.task.core.jdbc.model;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "users_hiber2")
+@Table(name = "users_hiber2")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id")
+    @Column(name = "id")
     private Long id;
 
-    @Column (name = "name" , nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column (name = "lastname" , nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column (name = "age" , nullable = false)
+    @Column(name = "age", nullable = false)
     private Byte age;
 
     public User() {
@@ -70,7 +70,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                '}' +'\n';
+                '}' + '\n';
     }
 
 }

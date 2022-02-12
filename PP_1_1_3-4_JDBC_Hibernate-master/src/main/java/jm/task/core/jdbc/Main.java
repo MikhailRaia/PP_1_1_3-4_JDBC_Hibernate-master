@@ -16,27 +16,24 @@ public class Main  {
     public static void main(String[] args) throws SQLException {
 
         //JDBC
-//        UserDao user = new UserDaoJDBCImpl();
-        UserService userService = new UserServiceImpl();
-//        user.createUsersTable();
-//        user.saveUser("andrei", "petrov",(byte)22);
-//        user.saveUser("vasya", "smirnov",(byte)25);
-//        user.saveUser("leha", "bobrov",(byte)27);
-//        System.out.println(user.getAllUsers());
-//        user.dropUsersTable();
-
-        // Hibernate
+//        UserService userService = new UserServiceImpl();
 //        userService.createUsersTable();
 //        userService.saveUser("andrei", "petrov",(byte)22);
 //        userService.saveUser("vasya", "smirnov",(byte)25);
 //        userService.saveUser("leha", "bobrov",(byte)27);
-        userService.dropUsersTable();
+//        System.out.println(userService.getAllUsers());
+//        userService.dropUsersTable();
 
-//        UserDao userHib = new UserDaoHibernateImpl();
+        // Hibernate
+        UserDao userHib = new UserDaoHibernateImpl();
 //        userHib.createUsersTable();
-
-//        userHib.saveUser("andrey", "petrov", (byte)20);
+//        userHib.saveUser("andrei", "petrov",(byte)22);
+//        userHib.saveUser("vasya", "smirnov",(byte)25);
+//        userHib.saveUser("leha", "bobrov",(byte)27);
+//        System.out.println(userHib.getAllUsers());
+//        userHib.cleanUsersTable();
 //        userHib.dropUsersTable();
+        userHib.removeUserById(2);
     }
 
 }

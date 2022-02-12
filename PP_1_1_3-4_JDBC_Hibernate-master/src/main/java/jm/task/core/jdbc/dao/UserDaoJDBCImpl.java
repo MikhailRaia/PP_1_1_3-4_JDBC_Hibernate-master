@@ -1,23 +1,17 @@
 package jm.task.core.jdbc.dao;
 
+import com.mysql.cj.Query;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-
-    public static final String USER_TABLE =
-            " CREATE TABLE  Users ( " +
-                    "id BIGINT(5) NOT NULL AUTO_INCREMENT , " +
-                    "name  VARCHAR(255) , " +
-                    "lastname VARCHAR(255) , " +
-                    "age tinyint (5) NOT NULL ,  " +
-                    "PRIMARY KEY( id )) ";
 
     public UserDaoJDBCImpl() {
         Util.setConnection();
@@ -25,32 +19,39 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try {
-            Util.statement.executeUpdate(USER_TABLE);
-            Util.statement.close();
-            System.out.println("Таблица Users создана");
-        } catch (SQLException ignored) {
+            Statement statement;
+            statement = Util.connection.createStatement();
+            statement.executeUpdate(" CREATE TABLE  Users ( " +
+                    "id BIGINT(5) NOT NULL AUTO_INCREMENT , " +
+                    "name  VARCHAR(255) , " +
+                    "lastname VARCHAR(255) , " +
+                    "age tinyint (5) NOT NULL ,  " +
+                    "PRIMARY KEY( id )) ");
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public void dropUsersTable() {
         try {
-            Util.statement.executeUpdate("DROP TABLE IF EXISTS Users");
-            Util.statement.close();
-            System.out.println("Таблица Users удалена или ее не существует");
+            Statement statement;
+            statement = Util.connection.createStatement();
+            statement.executeUpdate("DROP TABLE IF EXISTS Users");
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        PreparedStatement prSt;
-        String insert = "INSERT INTO Users ( name , lastname , age ) Values(?,?,?)";
         try {
-            prSt = Util.connection.prepareStatement(insert);
+            PreparedStatement prSt;
+            prSt = Util.connection.prepareStatement("INSERT INTO Users ( name , lastname , age ) Values(?,?,?)");
             prSt.setString(1, name);
             prSt.setString(2, lastName);
             prSt.setByte(3, age);
-            prSt.executeUpdate();//мб execute
+            prSt.executeUpdate();
             System.out.println("User с именем " + name + " добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,21 +63,24 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        List <User> userList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         try {
-            ResultSet resultSet = Util.statement.executeQuery("SELECT * FROM Users");
+            Statement statement;
+            statement = Util.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Users");
             while (resultSet.next()) {
-                userList.add(new User(resultSet.getString("name"), resultSet.getString("lastname"),resultSet.getByte("age") ));
+                userList.add(new User(resultSet.getString("name"), resultSet.getString("lastname"), resultSet.getByte("age")));
             }
-        } catch (SQLException ignore){
+        } catch (SQLException ignore) {
         }
         return userList;
     }
 
     public void cleanUsersTable() {
         try {
-            Util.statement.executeUpdate("TRUNCATE Users");
-            System.out.println("Таблица Users очищена");
+            Statement statement;
+            statement = Util.connection.createStatement();
+            statement.executeUpdate("TRUNCATE Users");
         } catch (SQLException e) {
             e.printStackTrace();
         }
